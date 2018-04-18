@@ -4,7 +4,9 @@ import Home from './Home';
 import Videos from './Videos';
 
 const Main = () => (
-  <div>
+  <div style={{
+    // marginTop: '1em'
+  }}>
     <Switch>
       <Route exact path='/' component={Home}/>
       <Route path='/videos' component={Videos}/>

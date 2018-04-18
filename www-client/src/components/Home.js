@@ -1,9 +1,13 @@
 import React from 'react';
+import Paper from 'material-ui/Paper';
 
 const Home = () => (
-  <p>
+  <Paper
+    style={{
+      padding: '1em'
+    }}>
     Hello, react world!
-  </p>
+  </Paper>
 );
 
 export default Home;
