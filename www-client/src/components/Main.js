@@ -5,7 +5,7 @@ import Videos from './Videos';
 
 const Main = () => (
   <div style={{
-    // marginTop: '1em'
+    marginTop: '1em'
   }}>
     <Switch>
       <Route exact path='/' component={Home}/>

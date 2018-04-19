@@ -32,13 +32,11 @@ class Header extends Component {
           onRequestChange={(open) => this.setState({open})}
         >
           <MenuItem
-            linkButton
             containerElement={<Link to='/' />}
             primaryText="Home"
             onClick={this.handleClose}
           />
           <MenuItem
-            linkButton
             containerElement={<Link to='/videos' />}
             primaryText="Videos"
             onClick={this.handleClose}
