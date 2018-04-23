@@ -4,13 +4,7 @@ import Home from './Home';
 import Videos from './Videos';
 import Callback from './Callback';
 
-const Main = ({auth}) => {
-  const handleAuthentication = (nextState, replace) => {
-    if (/access_token|id_token|error/.test(nextState.location.hash)) {
-      auth.handleAuthentication();
-    }
-  }
-
+const Main = ({auth, changeAuthStatus}) => {
   return (
     <div style={{
       marginTop: '1em'
@@ -18,10 +12,9 @@ const Main = ({auth}) => {
       <Switch>
         <Route exact path='/' render={(props) => <Home auth={auth} {...props} />}/>
         <Route path='/videos' render={(props) => <Videos auth={auth} {...props} />}/>
-        <Route path="/callback" render={(props) => {
-          handleAuthentication(props);
-          return <Callback {...props} />
-        }}/>
+        <Route path="/callback" render={(props) => (
+          <Callback auth={auth} changeAuthStatus={changeAuthStatus} {...props} />
+        )} />
       </Switch>
     </div>
   );
