@@ -19,15 +19,13 @@ class Header extends Component {
 
   handleLogin = () => this.props.auth.login();
 
-  handleLogout = () => this.props.auth.logout();
-
   render() {
     const { isAuthenticated } = this.props.auth;
 
     const button = !isAuthenticated() ? (
       <FlatButton label="Login" onClick={this.handleLogin.bind(this)} />
     ) : (
-      <FlatButton label="Logout" onClick={this.handleLogout.bind(this)} />
+      <FlatButton label="Logout" onClick={this.props.logout} />
     );
 
     return (
