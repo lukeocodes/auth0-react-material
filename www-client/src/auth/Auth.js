@@ -15,6 +15,9 @@ export default class Auth {
     this.logout = this.logout.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
     this.isAuthenticated = this.isAuthenticated.bind(this);
+
+    this.accessToken = undefined;
+    this.userProfile = undefined;
   }
 
   login() {
@@ -34,17 +37,21 @@ export default class Auth {
   setSession(authResult, cb) {
     // Set the time that the Access Token will expire at
     let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+
+    this.accessToken = authResult.accessToken;
+    this.userProfile = {};
+
     cb(true);
   }
 
   logout(cb) {
     // Clear Access Token and ID Token from local storage
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+
+    this.accessToken = undefined;
+    this.userProfile = undefined;
+    
     cb(false);
   }
 
