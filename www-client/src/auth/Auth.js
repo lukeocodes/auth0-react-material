@@ -51,7 +51,7 @@ export default class Auth {
 
     this.accessToken = undefined;
     this.userProfile = undefined;
-    
+
     cb(false);
   }
 
