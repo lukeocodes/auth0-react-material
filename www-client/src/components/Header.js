@@ -5,6 +5,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
+import FlatButton from 'material-ui/FlatButton';
 
 class Header extends Component {
   constructor(props) {
@@ -16,7 +17,19 @@ class Header extends Component {
 
   handleClose = () => this.setState({open: false});
 
+  handleLogin = () => this.props.auth.login();
+
+  handleLogout = () => this.props.auth.logout();
+
   render() {
+    const { isAuthenticated } = this.props.auth;
+
+    const button = !isAuthenticated() ? (
+      <FlatButton label="Login" onClick={this.handleLogin.bind(this)} />
+    ) : (
+      <FlatButton label="Logout" onClick={this.handleLogout.bind(this)} />
+    );
+
     return (
       <header>
         <AppBar
@@ -25,6 +38,7 @@ class Header extends Component {
             label="Open Drawer"
             onClick={this.handleToggle}
           ><MenuIcon /></IconButton>}
+          iconElementRight={button}
         />
         <Drawer
           docked={false}
