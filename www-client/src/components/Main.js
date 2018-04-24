@@ -12,9 +12,7 @@ const Main = ({auth, changeAuthStatus}) => {
       <Switch>
         <Route exact path='/' render={(props) => <Home auth={auth} {...props} />}/>
         <Route path='/videos' render={(props) => <Videos auth={auth} {...props} />}/>
-        <Route path="/callback" render={(props) => (
-          <Callback auth={auth} changeAuthStatus={changeAuthStatus} {...props} />
-        )} />
+        <Route path="/callback" render={(props) => <Callback auth={auth} {...props} />}/>
       </Switch>
     </div>
   );

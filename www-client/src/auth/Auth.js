@@ -18,41 +18,52 @@ export default class Auth {
 
     this.accessToken = undefined;
     this.userProfile = undefined;
+
+    this.authorizedCallback = () => {};
+    this.deauthorizedCallback = () => {};
   }
 
   login() {
     this.auth0.authorize();
   }
 
-  handleAuthentication(cb) {
+  handleAuthentication() {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult, cb);
+        // this.setSession(authResult);
+        this.getUserInfo(authResult);
       } else if (err) {
         console.log(err);
       }
     });
   }
 
-  setSession(authResult, cb) {
+  getUserInfo(authResult) {
+    // Use access token to retrieve user's profile and set session
+    this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
+      this.setSession(authResult, profile);
+    });
+  }
+
+  setSession(authResult, userProfile) {
     // Set the time that the Access Token will expire at
     let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('expires_at', expiresAt);
 
     this.accessToken = authResult.accessToken;
-    this.userProfile = {};
+    this.userProfile = userProfile;
 
-    cb(true);
+    this.authorizedCallback(this.isAuthenticated());
   }
 
-  logout(cb) {
+  logout() {
     // Clear Access Token and ID Token from local storage
     localStorage.removeItem('expires_at');
 
     this.accessToken = undefined;
     this.userProfile = undefined;
 
-    cb(false);
+    this.deauthorizedCallback(this.isAuthenticated());
   }
 
   isAuthenticated() {

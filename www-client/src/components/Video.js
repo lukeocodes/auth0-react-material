@@ -1,6 +1,6 @@
 import React from 'react';
 import YouTube from 'react-youtube';
-import {Card, CardMedia} from 'material-ui/Card';
+import { Card, CardMedia } from 'material-ui/Card';
 
 const Video = ({video}) => (
   <Card
