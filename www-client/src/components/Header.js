@@ -6,6 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import FlatButton from 'material-ui/FlatButton';
+import Avatar from 'material-ui/Avatar';
 
 class Header extends Component {
   constructor(props) {
@@ -22,12 +23,23 @@ class Header extends Component {
   handleLogout = () => this.props.auth.logout();
 
   render() {
-    const { isAuthenticated } = this.props.auth;
+    const { isAuthenticated, userProfile } = this.props.auth;
+    let avatar;
+
+    if (userProfile) {
+      avatar = userProfile.picture ? (
+        <Avatar src={userProfile.picture} size={30} />
+      ) : (
+        <Avatar size={30}>{userProfile.name.substring(0,1).toUpperCase()}</Avatar>
+      );
+    } else {
+      avatar = '';
+    }
 
     const button = !isAuthenticated() ? (
       <FlatButton label="Login" onClick={this.handleLogin.bind(this)} />
     ) : (
-      <FlatButton label="Logout" onClick={this.handleLogout.bind(this)} />
+      <FlatButton label="Logout" onClick={this.handleLogout.bind(this)} icon={avatar} />
     );
 
     return (

@@ -7,7 +7,7 @@ export default class Auth {
     redirectUri: 'http://localhost:3000/callback',
     audience: 'https://blog-posts.eu.auth0.com/userinfo',
     responseType: 'token id_token',
-    scope: 'openid'
+    scope: 'openid profile email'
   });
 
   constructor() {
@@ -30,10 +30,9 @@ export default class Auth {
   handleAuthentication() {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        // this.setSession(authResult);
         this.getUserInfo(authResult);
       } else if (err) {
-        console.log(err);
+        console.error(err);
       }
     });
   }
@@ -41,7 +40,11 @@ export default class Auth {
   getUserInfo(authResult) {
     // Use access token to retrieve user's profile and set session
     this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
-      this.setSession(authResult, profile);
+      if (!err) {
+        this.setSession(authResult, profile);
+      } else {
+        console.error(err);
+      }
     });
   }
 
@@ -70,6 +73,6 @@ export default class Auth {
     // Check whether the current time is past the
     // Access Token's expiry time
     let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    return new Date().getTime() < expiresAt;
+    return (Date.now() < expiresAt) && this.accessToken !== undefined;
   }
 }
