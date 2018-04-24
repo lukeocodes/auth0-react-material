@@ -24,22 +24,16 @@ class Header extends Component {
 
   render() {
     const { isAuthenticated, userProfile } = this.props.auth;
-    let avatar;
+    let avatar = '';
 
     if (userProfile) {
-      avatar = userProfile.picture ? (
-        <Avatar src={userProfile.picture} size={30} />
-      ) : (
-        <Avatar size={30}>{userProfile.name.substring(0,1).toUpperCase()}</Avatar>
-      );
-    } else {
-      avatar = '';
+      avatar = <Avatar src={userProfile.picture} size={30} />
     }
 
     const button = !isAuthenticated() ? (
-      <FlatButton label="Login" onClick={this.handleLogin.bind(this)} />
+      <FlatButton label="Log in" onClick={this.handleLogin.bind(this)} />
     ) : (
-      <FlatButton label="Logout" onClick={this.handleLogout.bind(this)} icon={avatar} />
+      <FlatButton label="Log out" onClick={this.handleLogout.bind(this)} icon={avatar} />
     );
 
     return (
