@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Video from './Video';
 
-const API = 'http://localhost:3001/videos';
+const API = 'http://localhost:3001';
 
 class Videos extends Component {
   constructor(props) {
@@ -13,9 +13,24 @@ class Videos extends Component {
   }
 
   componentDidMount() {
-    fetch(API)
-      .then(response => response.json())
-      .then(data => this.setState({ videos: data.items }));
+    const config = { headers: {} };
+    let route = `${API}/videos`;
+
+    if (this.props.auth.isAuthenticated()) {
+      config.headers.Authorization = `Bearer ${this.props.auth.accessToken}`;
+      route = `${API}/videos/favourites`;
+    }
+
+    fetch(route, config)
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        return response.json();
+      })
+      .then(data => this.setState({ videos: data }))
+      .catch(err => console.error());
   }
 
   render() {
@@ -27,6 +42,7 @@ class Videos extends Component {
           <Video
             key={video.id}
             video={video}
+            {...this.props}
           />
         )}
       </div>

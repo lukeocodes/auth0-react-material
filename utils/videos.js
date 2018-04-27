@@ -1,15 +1,34 @@
 const parser = new (require('rss-parser'))();
 const cache = require('memory-cache');
+const userProfile = require('./userProfile');
+const mongoose = require('mongoose');
 
 const videos = async (req, res, next) => {
   let videos = cache.get('videos');
+  const user = req.user;
 
   if (videos === null) {
-    videos = await parser.parseURL('https://www.youtube.com/feeds/videos.xml?channel_id=UCUlQ5VoIzE_kFbYjzUwHTKA');
-    cache.put('videos', videos, 1000 * 60 * 60); // 1 hour
+    const response = await parser.parseURL('https://www.youtube.com/feeds/videos.xml?channel_id=UCUlQ5VoIzE_kFbYjzUwHTKA');
+    videos = response.items;
+    cache.put('videos', videos, 1000 * 60 * 60);
+  }
+
+  if (req.user !== undefined) {
+    user.profile = await userProfile(req);
+
+    const VideoModel = require('../schemas/video');
+    const favouriteVideos = await VideoModel.find({ favourite: true, user: user.profile.email }).then(data => { return data; });
+
+    videos.forEach((video, key, videos) => {
+      videos[key].favourite = false;
+      favouriteVideos.find(o => {
+        videos[key].favourite = (o.id === video.id);
+      });
+    });
   }
 
   req.data = videos;
+
   next();
 };
 
