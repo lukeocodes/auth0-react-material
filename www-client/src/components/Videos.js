@@ -22,15 +22,8 @@ class Videos extends Component {
     }
 
     fetch(route, config)
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
-        return response.json();
-      })
-      .then(data => this.setState({ videos: data }))
-      .catch(err => console.error());
+      .then(response => response.json())
+      .then(data => this.setState({ videos: data }));
   }
 
   render() {
