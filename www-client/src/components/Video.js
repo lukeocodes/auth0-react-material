@@ -30,7 +30,7 @@ class Video extends Component {
 
       let route = `${API}/videos/favourite`;
 
-      if (!video.favourite) {
+      if (video.favourite) {
         route = `${API}/videos/unfavourite`;
       }
 

@@ -18,9 +18,15 @@ class Header extends Component {
 
   handleClose = () => this.setState({open: false});
 
-  handleLogin = () => this.props.auth.login();
+  handleLogin = () => {
+    localStorage.setItem('redirectTo', window.location.pathname);
 
-  handleLogout = () => this.props.auth.logout();
+    this.props.auth.login();
+  };
+
+  handleLogout = () => {
+    this.props.auth.logout();
+  };
 
   render() {
     const { isAuthenticated, userProfile } = this.props.auth;

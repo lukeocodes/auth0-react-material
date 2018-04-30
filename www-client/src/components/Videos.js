@@ -14,14 +14,12 @@ class Videos extends Component {
 
   componentDidMount() {
     const config = { headers: {} };
-    let route = `${API}/videos`;
 
     if (this.props.auth.isAuthenticated()) {
       config.headers.Authorization = `Bearer ${this.props.auth.accessToken}`;
-      route = `${API}/videos/favourites`;
     }
 
-    fetch(route, config)
+    fetch(`${API}/videos`, config)
       .then(response => response.json())
       .then(data => this.setState({ videos: data }));
   }

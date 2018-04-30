@@ -7,7 +7,12 @@ import Auth from '../auth/Auth';
 class App extends Component {
   authorized(authenticated) {
     this.setState({ authenticated });
-    this.props.history.push('/');
+
+    if (localStorage.getItem('redirectTo')) {
+      this.props.history.push(localStorage.getItem('redirectTo'));
+    } else {
+      this.props.history.push('/');
+    }
   }
 
   deauthorized() {

@@ -4,11 +4,7 @@ const auth = require('../utils/auth');
 const bodyParser = require('body-parser');
 const userProfile = require('../utils/userProfile');
 
-router.get('/videos', videos, (req, res) => {
-  res.json(req.data);
-});
-
-router.get('/videos/favourites', auth, videos, (req, res) => {
+router.get('/videos', auth.optional, videos, (req, res) => {
   res.json(req.data);
 });
 
@@ -29,13 +25,13 @@ const toggleFavourite = async (req, favourite) => {
   return video;
 };
 
-router.post('/videos/favourite', auth, bodyParser.json(), async (req, res) => {
+router.post('/videos/favourite', auth.required, bodyParser.json(), async (req, res) => {
   const body = await toggleFavourite(req, true);
 
   res.json(body);
 });
 
-router.post('/videos/unfavourite', auth, bodyParser.json(), async (req, res) => {
+router.post('/videos/unfavourite', auth.required, bodyParser.json(), async (req, res) => {
   const body = await toggleFavourite(req, false);
 
   res.json(body);
