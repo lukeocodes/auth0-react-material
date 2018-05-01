@@ -2,7 +2,6 @@ const router = require('express').Router();
 const videos = require('../utils/videos');
 const auth = require('../utils/auth');
 const bodyParser = require('body-parser');
-const userProfile = require('../utils/userProfile');
 
 router.get('/videos', auth.optional, videos, (req, res) => {
   res.json(req.data);
@@ -10,10 +9,7 @@ router.get('/videos', auth.optional, videos, (req, res) => {
 
 const toggleFavourite = async (req, favourite) => {
   const VideoModel = require('../schemas/video');
-  const profile = await userProfile(req);
-  let video;
-
-  video = await VideoModel.findOne({ id: req.body.id, user: profile.email }).then(obj => { return obj });
+  let video = await VideoModel.findOne({ id: req.body.id, user: req.user.sub }).then(obj => { return obj });
 
   if (!video) {
     video = new VideoModel(req.body);
