@@ -33,5 +33,4 @@ router.post('/videos/unfavourite', auth.required, bodyParser.json(), async (req,
   res.json(body);
 });
 
-
 module.exports = router;
