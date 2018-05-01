@@ -3,7 +3,6 @@ const cache = require('memory-cache');
 
 const videos = async (req, res, next) => {
   let videos = cache.get('videos');
-  const user = req.user;
 
   if (videos === null) {
     const response = await parser.parseURL('https://www.youtube.com/feeds/videos.xml?channel_id=UCUlQ5VoIzE_kFbYjzUwHTKA');
@@ -15,11 +14,8 @@ const videos = async (req, res, next) => {
     const VideoModel = require('../schemas/video');
     const favouriteVideos = await VideoModel.find({ favourite: true, user: req.user.sub }).then(data => { return data; });
 
-    videos.forEach((video, key, videos) => {
-      videos[key].favourite = false;
-      favouriteVideos.find(o => {
-        videos[key].favourite = (o.id === video.id);
-      });
+    videos = videos.map((video) => {
+      return favouriteVideos.find(obj => video.id === obj.id) || video;
     });
   }
 

@@ -25,7 +25,7 @@ class Video extends Component {
           'Content-Type': 'application/json'
         },
         method: 'post',
-        body: JSON.stringify({...video, user: auth.userProfile.email})
+        body: JSON.stringify({...video, user: auth.userProfile.sub})
       };
 
       let route = `${API}/videos/favourite`;
