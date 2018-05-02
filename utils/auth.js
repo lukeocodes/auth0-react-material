@@ -8,7 +8,7 @@ const config = {
   algorithms: [ 'RS256' ]
 };
 
-const auth = {
+module.exports = {
   required: (req, res, next) => {
     return jwt(config)(req, res, next);
   },
@@ -16,5 +16,3 @@ const auth = {
     return jwt({...config, credentialsRequired: false})(req, res, next);
   }
 };
-
-module.exports = auth;
