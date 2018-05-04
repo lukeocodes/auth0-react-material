@@ -9,7 +9,7 @@ router.get('/videos', auth.optional, videos, (req, res) => {
 
 const toggleFavourite = async (req, favourite) => {
   const VideoModel = require('../schemas/video');
-  let video = await VideoModel.findOne({ id: req.body.id, user: req.user.sub }).then(obj => { return obj });
+  let video = await VideoModel.findOne({ id: req.body.id, user: req.user.sub });
 
   if (!video) {
     video = new VideoModel(req.body);
