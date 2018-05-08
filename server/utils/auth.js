@@ -4,7 +4,7 @@ const jwksRsa = require('jwks-rsa');
 const config = require('../config');
 const issuer = `https://${config.auth0Domain}/`;
 const jwtConfig = {
-  secret: jwksRsa.expressJwtSecret({ jwksUri: `${issuer}/.well-known/jwks.json` }),
+  secret: jwksRsa.expressJwtSecret({ jwksUri: `${issuer}.well-known/jwks.json` }),
   audience: config.auth0Audience,
   issuer: issuer,
   algorithms: [ 'RS256' ]

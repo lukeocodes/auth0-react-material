@@ -7,7 +7,7 @@ export default class Auth {
     clientID: config.auth0ClientID,
     redirectUri: config.auth0RedirectUri,
     audience: config.auth0Audience,
-    responseType: config.auth0RresponseType,
+    responseType: config.auth0ResponseType,
     scope: config.auth0Scope
   });
 
