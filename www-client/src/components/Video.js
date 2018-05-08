@@ -3,8 +3,7 @@ import YouTube from 'react-youtube';
 import { Card, CardMedia, CardActions } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
-
-const API = 'http://localhost:3001';
+import config from '../config';
 
 class Video extends Component {
   constructor(props) {
@@ -18,7 +17,7 @@ class Video extends Component {
   handleFavourite = (video) => {
     const { auth } = this.props;
     if (this.props.auth.isAuthenticated()) {
-      const config = {
+      const reqConfig = {
         headers: {
           'Authorization': `Bearer ${auth.accessToken}`,
           'Accept': 'application/json',
@@ -28,13 +27,13 @@ class Video extends Component {
         body: JSON.stringify({...video, user: auth.userProfile.sub})
       };
 
-      let route = `${API}/videos/favourite`;
+      let route = `${config.apiUrl}/videos/favourite`;
 
       if (video.favourite) {
-        route = `${API}/videos/unfavourite`;
+        route = `${config.apiUrl}/videos/unfavourite`;
       }
 
-      fetch(route, config)
+      fetch(route, reqConfig)
         .then(response => {
           if (!response.ok) {
             throw Error(response.statusText);

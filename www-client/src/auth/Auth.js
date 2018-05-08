@@ -1,13 +1,14 @@
 import auth0 from 'auth0-js';
+import config from '../config';
 
 export default class Auth {
   auth0 = new auth0.WebAuth({
-    domain: 'blog-posts.eu.auth0.com',
-    clientID: '0IQISmHUjUqJzhxPbY5PUPlKYLim5Acu',
-    redirectUri: 'http://localhost:3000/callback',
-    audience: 'http://localhost:3001/',
-    responseType: 'token id_token',
-    scope: 'openid profile email'
+    domain: config.auth0Domain,
+    clientID: config.auth0ClientID,
+    redirectUri: config.auth0RedirectUri,
+    audience: config.auth0Audience,
+    responseType: config.auth0RresponseType,
+    scope: config.auth0Scope
   });
 
   constructor() {

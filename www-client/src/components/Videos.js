@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Video from './Video';
-
-const API = 'http://localhost:3001';
+import config from '../config';
 
 class Videos extends Component {
   constructor(props) {
@@ -13,13 +12,13 @@ class Videos extends Component {
   }
 
   componentDidMount() {
-    const config = { headers: {} };
+    const reqConfig = { headers: {} };
 
     if (this.props.auth.isAuthenticated()) {
-      config.headers.Authorization = `Bearer ${this.props.auth.accessToken}`;
+      reqConfig.headers.Authorization = `Bearer ${this.props.auth.accessToken}`;
     }
 
-    fetch(`${API}/videos`, config)
+    fetch(`${config.apiUrl}/videos`, reqConfig)
       .then(response => response.json())
       .then(data => this.setState({ videos: data }));
   }
