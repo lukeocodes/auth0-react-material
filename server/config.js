@@ -1,8 +1,8 @@
 module.exports = {
-  auth0Domain: 'blog-posts.eu.auth0.com',
-  auth0Audience: 'http://localhost:3000/api',
-  auth0YoutubeRss: 'https://www.youtube.com/feeds/videos.xml?channel_id=UCUlQ5VoIzE_kFbYjzUwHTKA',
-  mlabConnectionString: 'mongodb://videos:Password1@ds143388.mlab.com:43388/auth0-videos',
+  auth0Domain: '<auth0-domain>.auth0.com',
+  auth0Audience: '<auth0-api-audience-identifier>',
+  auth0YoutubeRss: '<youtube-rss-feed>', // https://www.youtube.com/feeds/videos.xml?channel_id=UCUlQ5VoIzE_kFbYjzUwHTKA
+  mlabConnectionString: '<mlab-url-string-or-localhost>',
   corsOrigin: '*',
   nodePort: 3001
 };
