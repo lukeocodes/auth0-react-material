@@ -5,14 +5,15 @@ const videos = async (req, res, next) => {
   let videos = cache.get('videos');
 
   if (videos === null) {
-    const response = await parser.parseURL('https://www.youtube.com/feeds/videos.xml?channel_id=UCUlQ5VoIzE_kFbYjzUwHTKA');
+    const config = require('../config');
+    const response = await parser.parseURL(config.auth0YoutubeRss);
     videos = response.items;
     cache.put('videos', videos, 1000 * 60 * 60);
   }
 
   if (req.user !== undefined) {
     const VideoModel = require('../schemas/video');
-    const favouriteVideos = await VideoModel.find({ favourite: true, user: req.user.sub }).then(data => { return data; });
+    const favouriteVideos = await VideoModel.find({ favourite: true, user: req.user.sub });
 
     videos = videos.map((video) => {
       return favouriteVideos.find(obj => video.id === obj.id) || video;
