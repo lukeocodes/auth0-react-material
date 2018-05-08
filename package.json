@@ -1,0 +1,17 @@
+{
+  "name": "auth0-react-material",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Auth0: React, Express, and Material UI: In the wild",
+  "repository": "git@github.com:lukeoliff/auth0-react-material.git",
+  "author": "Luke Oliff <luke@lukeoliff.com>",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^3.5.1"
+  },
+  "scripts": {
+    "react":   "cd www-client && yarn start",
+    "express": "cd server && yarn dev",
+    "dev":     "concurrently --kill-others-on-fail \"yarn react\" \"yarn express\""
+  }
+}

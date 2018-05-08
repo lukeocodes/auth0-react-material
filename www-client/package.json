@@ -1,6 +1,6 @@
 {
-  "name": "www-client",
-  "version": "0.1.0",
+  "name": "auth0-react-material-www-client",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "auth0-js": "^9.4.2",
